@@ -8,6 +8,22 @@ decompose my code into a lot of unecessary modules and add a lot of things
 that most experienced programmers would not. That is because the main goal 
 here is learning and nothing more.
 
+# spec
+     The intepreter provides for the programmer 30000 bytes of 1 byte blocks. 
+Brainfuck has 8 operators in total, namely
+
+| op  | description                                                              |
+----------------------------------------------------------------------------------
+|  >  | increases memory pointer by 1                                            |
+|  <  | decreases memory pointer by 1                                            |
+|  +  | Increases the value pointed to by the memory pointer by 1                |
+|  -  | Decreases the value pointed to by the memory pointer by 1                |
+|  ]  | loop until the value at the current block(memory pointer) is 0           |
+|  [  | If value pointed by current block is not equal to 0, jump to ]           |
+|  ,  | Input a 1 byte character from the user                                   |
+|  .  | Output the 1 byte character at the pointed to memory block to the stdout |
+
+
 ### So what does it do?
 
 This piece  of code you can freely access to burn your retinas, dear user,
