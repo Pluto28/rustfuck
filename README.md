@@ -12,6 +12,7 @@ here is learning and nothing more.
      The intepreter provides for the programmer 30000 bytes of 1 byte blocks. 
 Brainfuck has 8 operators in total, namely
 
+``
 | op  | description                                                              |
 ----------------------------------------------------------------------------------
 |  >  | increases memory pointer by 1                                            |
@@ -22,6 +23,7 @@ Brainfuck has 8 operators in total, namely
 |  [  | If value pointed by current block is not equal to 0, jump to ]           |
 |  ,  | Input a 1 byte character from the user                                   |
 |  .  | Output the 1 byte character at the pointed to memory block to the stdout |
+``
 
 
 ### So what does it do?
