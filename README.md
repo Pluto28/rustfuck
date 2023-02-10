@@ -13,16 +13,16 @@ here is learning and nothing more.
 Brainfuck has 8 operators in total, namely
 
 ``
-| op  | description                                                              |
-----------------------------------------------------------------------------------
-|  >  | increases memory pointer by 1                                            |
-|  <  | decreases memory pointer by 1                                            |
-|  +  | Increases the value pointed to by the memory pointer by 1                |
-|  -  | Decreases the value pointed to by the memory pointer by 1                |
-|  ]  | loop until the value at the current block(memory pointer) is 0           |
-|  [  | If value pointed by current block is not equal to 0, jump to ]           |
-|  ,  | Input a 1 byte character from the user                                   |
-|  .  | Output the 1 byte character at the pointed to memory block to the stdout |
+|  op   |  description                                                               |
+| ----- | -------------------------------------------------------------------------- |
+|   >   |  increases memory pointer by 1                                             |
+|   <   |  decreases memory pointer by 1                                             |
+|   +   |  Increases the value pointed to by the memory pointer by 1                 |
+|   -   |  Decreases the value pointed to by the memory pointer by 1                 |
+|   ]   |  loop until the value at the current block(memory pointer) is 0            |
+|   [   |  If value pointed by current block is not equal to 0, jump to ]            |
+|   ,   |  Input a 1 byte character from the user                                    |
+|   .   |  Output the 1 byte character at the pointed to memory block to the stdout  |
 ``
 
 
