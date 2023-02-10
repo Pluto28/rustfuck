@@ -1,0 +1,4 @@
+     Any interpreter worth its shit will have a shell, so here you go.
+Should be simple. Just take one line of input from the user and execute it.
+This module is probably not gonna be robust enough so as to guarantee 
+further development in the future.
