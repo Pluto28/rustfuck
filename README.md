@@ -26,8 +26,8 @@ Brainfuck has 8 operators in total, namely
 
 ### So what does it do?
 
-This piece  of code you can freely access to burn your retinas, dear user,
-just like an ecclipse, is a braifuck interpreter. I tried not to use any
+This retina burning piece of software, comparable to an ecclipse, is a brainfuck 
+interpreter. I tried not to use any
 dependencies that would hinder learning something interesting, and so i implemented
 the lexer and parser myself, which is probably a very bad idea for anything
 serious given my knowledge level. But you would need to be a special kinda
