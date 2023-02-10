@@ -1,0 +1,28 @@
+     When  starting the execution of a program, the interpreter should set
+the memory allocated for the program to all zeroes.
+     
+     When we find a OBRACKETS token, we start executing the piece of code
+immediately following it until we find the matching CBRACKETS token. If no CBRACKETS
+token is found, we have an error. Maybe this should be part of the lexer? That is, 
+the lexer make sure that we find all the matching square brackets before proceding to
+parsing(If we do parsing at all).
+
+     When the token is a > (INCMEMP), we increment 1 to the value of the memory address
+pointer. If MA = MEM_MAX before increment, raise an error.
+     
+     When the token is a < (DECMEMP), we decrement 1 from the value of the memory
+address pointer. If MA = 0 before decrement, raise an error.
+
+     When the token is INCVAL, increment value pointed to by the memory pointer 
+by 1. If ..., raise an error.
+
+     When the token is DECVAL, decrease value pointed to by the memory pointer 
+by 1. If ..., raise an error.
+
+     When the token is GETVAL, call rust function and get one byte of user input.
+If the user input more than one byte of data, raise an error and interpret only
+the first byte using little endian order.
+
+     When the token is PUTVAL, call a rust function to output one byte to
+stdout. 
+

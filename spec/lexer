@@ -1,0 +1,16 @@
+     The lexer is responsible for taking a raw array of bytes and decomposing
+them into the tokens we love and desire. Since brainfuck's grammar is 
+considerably limited and anything not composing the grammar is a comment,
+this should be easy. 
+     Any value that doesn't compose our grammar will map to some invalid 
+or NONE token.
+
+     [ will map to OBRACKETS
+     ] will map to CBRACKETS
+     > will map to INCMEMP
+     < will map to DECMEMP
+     + will map to INCVAL
+     - will map to DECVAL
+     , will map to GETVAL
+     . will map to PUTVAL 
+

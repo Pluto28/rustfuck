@@ -8,7 +8,7 @@ decompose my code into a lot of unecessary modules and add a lot of things
 that most experienced programmers would not. That is because the main goal 
 here is learning and nothing more.
 
- spec
+# spec
      The intepreter provides for the programmer 30000 bytes of 1 byte blocks. 
 Brainfuck has 8 operators in total, namely
 
@@ -35,11 +35,9 @@ of nutjob to use brainfuck for anything serious anyways, so this is no point
 of contention.
 
 ### How to compile?
-Seriously? Well, you could try
+Run 
 
 ```cargo build --release```
-
-as a starter.
 
 
 ### What?
