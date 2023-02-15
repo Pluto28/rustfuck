@@ -14,3 +14,10 @@ or NONE token.
      , will map to GETVAL
      . will map to PUTVAL 
 
+
+     Implementation
+     - We will have an enum for all the possible mutually exclusive tokens.
+     - Defining a trait containing the basic operations provided by the 
+     tokenizer seems to be the most reasonable choice.
+     - We could implement the trait for the Stdio and File data structures,
+     taking ownership of them

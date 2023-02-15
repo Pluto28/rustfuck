@@ -23,6 +23,12 @@ by 1. If ..., raise an error.
 If the user input more than one byte of data, raise an error and interpret only
 the first byte using little endian order.
 
-     When the token is PUTVAL, call a rust function to output one byte to
-stdout. 
+     When the token is PUTVAL, call a rust function to output one character to
+stdout. The data pointed to by the pointer needs to be converted to a char
 
+
+     We could possible store the tokens in an array and execute our program using
+this array. Since brainfuck is a very simple language, doing so should'nt be a
+problem.
+     When we find the start of a loop, we store the index of the next valid token 
+in this array of tokens.
