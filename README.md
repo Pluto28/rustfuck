@@ -1,12 +1,12 @@
 # Why?
 
 Honestly, just a toy project to get more acquainted with the
-honorable rust language, slayer of CPPuses
+honorable rust language.
 
-Also note that this being a toy project, it will be very verbose and i'll try to
-decompose my code into a lot of unecessary modules and add a lot of things
-that most experienced programmers would not. That is because the main goal 
-here is learning and nothing more.
+Also note that this being a toy project, it will be verbose and some of the
+choices made will seem incredibly impractical. This project was created
+solely for learning and the programmer is kinda of a noob, so that is
+probably what justifies the errors therein
 
 # spec
      The intepreter provides for the programmer 30000 bytes of 1 byte blocks. 
@@ -26,7 +26,7 @@ Brainfuck has 8 operators in total, namely
 
 ### So what does it do?
 
-This retina burning piece of software, comparable to an ecclipse, is a brainfuck 
+This retina burning piece of software is a brainfuck 
 interpreter. I tried not to use any
 dependencies that would hinder learning something interesting, and so i implemented
 the lexer and parser myself, which is probably a very bad idea for anything
