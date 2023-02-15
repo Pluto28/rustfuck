@@ -19,5 +19,6 @@ or NONE token.
      - We will have an enum for all the possible mutually exclusive tokens.
      - Defining a trait containing the basic operations provided by the 
      tokenizer seems to be the most reasonable choice.
-     - We could implement the trait for the Stdio and File data structures,
-     taking ownership of them
+     - The trait is implemented for the String and possible str types, 
+     with the data provided to the method being the sequence of characters
+     read from the file or the standard input by some other part of the interpreter
