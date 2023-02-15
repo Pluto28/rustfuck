@@ -1,4 +1,3 @@
-use std::fs::File;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum Token {
