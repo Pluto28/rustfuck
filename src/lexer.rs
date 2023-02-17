@@ -9,7 +9,7 @@ pub enum Token {
     DECVAl,
     GETVAl,
     PUTVAL,
-    COMMENT
+    COMMENT,
 }
 
 pub trait Tokenize {
