@@ -1,4 +1,6 @@
 
+use std::io::stdin;
+
 use crate::lexer::Token;
 
 #[derive(Debug)]
@@ -44,7 +46,7 @@ impl Interpret {
                 Token::DECVAl    => self.dec_val_at_memp(),
                 Token::OBRACKETS => self.stackp.push(self.instrp),
                 Token::CBRACKETS => self.stop_loop(),
-                Token::GETVAl    => (),
+                Token::GETVAl    => self.get_char(),
                 Token::PUTVAL    => self.print_mem(), 
                 _                => ()
             }
@@ -108,4 +110,21 @@ impl Interpret {
         print!("{}", *character as char);
     }
 
+    fn get_char(&mut self) {
+        let mut buffer = String::new();
+        let _result = stdin().read_line(&mut buffer);
+
+        // WTF rust?
+        buffer = buffer.replace("\\0", "\0");
+
+        let addrp = self.
+            memory.
+            get_mut(self.memp).
+            unwrap();
+
+        *addrp = buffer.
+            chars().
+            next().
+            unwrap() as u8;
+    }
 }
