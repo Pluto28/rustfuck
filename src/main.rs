@@ -1,7 +1,6 @@
 mod lexer;
 mod execute;
 
-
 use std::fs::File;
 use crate::lexer::Tokenize;
 use execute::Interpret;

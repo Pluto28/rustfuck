@@ -34,7 +34,9 @@ impl Tokenize for String {
                  _  => Token::COMMENT
             };
 
-            tokens.push(token);
+            if token != Token::COMMENT {
+                tokens.push(token);
+            }
         }
 
         tokens

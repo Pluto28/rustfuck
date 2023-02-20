@@ -1,5 +1,5 @@
 
-use std::io::stdin;
+use std::io::{stdin, Read, BufRead};
 
 use crate::lexer::Token;
 
@@ -76,7 +76,6 @@ impl Interpret {
         *val = *val - 1;
     }
 
-    // TODO: handle error
     ///   Check wheter the value on memory pointed to by the memory pointer 
     /// is equal to 0. If the value is equal to 0, stop execution of the
     /// inner loop. Otherwise, restart execution at the first token after
@@ -110,21 +109,27 @@ impl Interpret {
         print!("{}", *character as char);
     }
 
-    fn get_char(&mut self) {
-        let mut buffer = String::new();
-        let _result = stdin().read_line(&mut buffer);
 
-        // WTF rust?
-        buffer = buffer.replace("\\0", "\0");
+
+    fn get_char(&mut self) {
+        let mut buffer: String = String::new();
+        let _result = stdin().lock().read_line(&mut buffer).unwrap();
+        ascii_raw_to_bytes(&mut buffer);
 
         let addrp = self.
             memory.
             get_mut(self.memp).
             unwrap();
 
-        *addrp = buffer.
-            chars().
-            next().
-            unwrap() as u8;
+        *addrp = *buffer.
+            as_bytes().
+            get(0).
+            unwrap();
     }
+}
+
+fn ascii_raw_to_bytes(string: &mut String) {
+    *string = string.replace("\\n", "\n");
+    *string = string.replace("\\t", "\t");
+    *string = string.replace("\\0", "\0");
 }
