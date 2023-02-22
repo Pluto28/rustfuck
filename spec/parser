@@ -1,0 +1,26 @@
+To parse the stream of tokens, we define a recursive function. 
+
+     An Open bracket enum variant contains the index of its matching closing bracket
+     A Closing bracket contains the index of its matching Opening bracket
+
+The recursive function works as follow:
+
+     We call it on the first opening bracket we find. We will need a function
+to search for the first opening bracket. Maybe rust has a method for it.
+
+     Once we call the recursive function, we take each token on the token stream
+and try matching it against two possible choices:
+          - An Obrackets. If the token matches this, we call the function against
+          and pass to it the index of this opening bracket. The function will return
+          the index of the closing bracket matchin this opening bracket.
+
+          - An Cbrackets. If the token matches this, we return the index we are at 
+          on the token stream
+
+     Things we need to keep track of:
+          - The current index on the token stream.
+          - The index of the opening bracket that prompted recursion.
+
+     Each function call will take:
+          - The index of the opening bracket that prompted recursion
+          - 
