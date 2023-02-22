@@ -1,4 +1,3 @@
-
 #[derive(Debug, PartialEq, Eq)]
 pub enum Token {
     OBRACKETS,
@@ -20,6 +19,7 @@ impl Tokenize for String {
     fn to_tokens(&self) -> Vec<Token> {
         let chars = self.chars();
         let mut tokens: Vec<Token> = Vec::new();
+        let mut index = 0;
 
         for ch in chars {
             let token = match ch {
@@ -31,10 +31,12 @@ impl Tokenize for String {
                 '-' => Token::DECVAl,
                 ',' => Token::GETVAl,
                 '.' => Token::PUTVAL,
-                 _  => Token::COMMENT
+                _ => Token::COMMENT,
             };
 
             if token != Token::COMMENT {
+                //print!(" ({}: {}  {:?}) ", ch, index, token);
+                index = index + 1;
                 tokens.push(token);
             }
         }
