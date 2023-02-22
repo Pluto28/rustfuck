@@ -1,5 +1,6 @@
 mod execute;
 mod lexer;
+mod parser;
 
 use crate::lexer::Tokenize;
 use execute::Interpret;

@@ -1,7 +1,9 @@
+use crate::parser::Parse;
+
 #[derive(Debug, PartialEq, Eq)]
 pub enum Token {
-    OBRACKETS,
-    CBRACKETS,
+    OBRACKETS(usize),
+    CBRACKETS(usize),
     INCMEMPTR,
     DECMEMPTR,
     INCVAL,
@@ -19,12 +21,12 @@ impl Tokenize for String {
     fn to_tokens(&self) -> Vec<Token> {
         let chars = self.chars();
         let mut tokens: Vec<Token> = Vec::new();
-        let mut index = 0;
+        let mut tindex = 0;
 
         for ch in chars {
             let token = match ch {
-                '[' => Token::OBRACKETS,
-                ']' => Token::CBRACKETS,
+                '[' => Token::OBRACKETS(0),
+                ']' => Token::CBRACKETS(0),
                 '>' => Token::INCMEMPTR,
                 '<' => Token::DECMEMPTR,
                 '+' => Token::INCVAL,
@@ -34,14 +36,50 @@ impl Tokenize for String {
                 _ => Token::COMMENT,
             };
 
+            //if token == Token::OBRACKETS {
+            //    print!(" ({}: {}  {:?}) ", ch, tindex, token);
+            //}
+
             if token != Token::COMMENT {
                 //print!(" ({}: {}  {:?}) ", ch, index, token);
-                index = index + 1;
+                tindex = tindex + 1;
                 tokens.push(token);
             }
         }
 
+        tokens.parse();
         tokens
+    }
+}
+
+impl Parse for Vec<Token> {
+    fn parse(&mut self) {}
+
+    ///   Lookup recursively, finding the starting and ending index
+    /// of every OBRACKETS or CBRACKETS token, replacing the unfiled
+    /// portion of the enum variant with the value on the token stream
+    /// it sits
+    fn lookup(&mut self, openi: usize) -> usize {
+        let mut tokeni = openi;
+        let mut matchi = openi;
+
+        for token in self[openi..].iter_mut() {
+            match *token {
+                Token::OBRACKETS(val) => {
+                    self.lookup(tokeni);
+
+                }
+                Token::CBRACKETS(val) => {
+                    matchi = tokeni;
+
+                }
+                _ => (),
+            }
+
+            tokeni = tokeni + 1;
+        }
+
+        matchi
     }
 }
 
@@ -52,13 +90,13 @@ mod tests {
     #[test]
     fn test_obrackets() {
         let data = String::from("[").to_tokens().pop().unwrap();
-        assert_eq!(data, Token::OBRACKETS);
+        assert_eq!(data, Token::OBRACKETS(_));
     }
 
     #[test]
     fn test_cbrackets() {
         let data = String::from("]").to_tokens().pop().unwrap();
-        assert_eq!(data, Token::CBRACKETS);
+        assert_eq!(data, Token::CBRACKETS(_));
     }
 
     #[test]
