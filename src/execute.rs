@@ -1,4 +1,4 @@
-use std::io::{stdin, BufRead};
+use std::io::{stdin, stdout, BufRead, Read, Write};
 
 use crate::lexer::Token;
 
@@ -8,6 +8,7 @@ pub struct Interpret {
     tokens: Vec<Token>,
     instrp: usize,
     memp: usize,
+    charb: Vec<char>,
 }
 
 impl Interpret {
@@ -17,6 +18,7 @@ impl Interpret {
             tokens,
             instrp: 0,
             memp: 0,
+            charb: Vec::new(),
         }
     }
 
@@ -38,23 +40,19 @@ impl Interpret {
                 Token::INCVAL => self.inc_val_at_memp(),
                 Token::DECVAl => self.dec_val_at_memp(),
                 Token::OBRACKETS(closemb) => {
-                    let memv = *self.memory.
-                        get(self.memp).
-                        unwrap();
+                    let memv = *self.memory.get(self.memp).unwrap();
 
                     if memv == 0 {
                         self.instrp = closemb;
                     }
                 }
                 Token::CBRACKETS(openmb) => {
-                    let memv = *self.memory.
-                        get(self.memp).
-                        unwrap();
+                    let memv = *self.memory.get(self.memp).unwrap();
 
                     if memv != 0 {
                         self.instrp = openmb;
                     }
-                },
+                }
                 Token::GETVAl => self.get_char(),
                 Token::PUTVAL => self.print_mem(),
                 _ => (),
@@ -81,27 +79,26 @@ impl Interpret {
         *val = val.wrapping_sub(1);
     }
 
-
     /// Print value pointed to by the memory pointer
     fn print_mem(&self) {
         let character = self.memory.get(self.memp).unwrap();
-
         print!("{}", *character as u8 as char);
+
+        //  Flush stdout before printing anything. This avoid weird
+        // printing behavior on the terminal
+        stdout().flush().unwrap();
     }
 
     fn get_char(&mut self) {
-        let mut buffer: String = String::new();
-        let _result = stdin().lock().read_line(&mut buffer).unwrap();
-        ascii_raw_to_bytes(&mut buffer);
+        if self.charb.len() == 0 {
+            let mut buffer = String::new();
+            let _result = stdin().lock().read_line(&mut buffer).unwrap();
+
+            let charb = buffer.chars().rev().collect();
+            self.charb = charb;
+        }
 
         let addrp = self.memory.get_mut(self.memp).unwrap();
-
-        *addrp = *buffer.as_bytes().get(0).unwrap();
+        *addrp = self.charb.pop().unwrap() as u8;
     }
-}
-
-fn ascii_raw_to_bytes(string: &mut String) {
-    *string = string.replace("\\n", "\n");
-    *string = string.replace("\\t", "\t");
-    *string = string.replace("\\0", "\0");
 }
