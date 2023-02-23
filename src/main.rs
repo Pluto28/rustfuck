@@ -4,6 +4,7 @@ mod parser;
 
 use crate::lexer::Tokenize;
 use execute::Interpret;
+use parser::Parse;
 use std::fs::File;
 use std::env;
 use std::io::Read;
@@ -30,7 +31,6 @@ fn main() {
 
 fn execute_interpreter(program: String) {
     let token_stream = program.to_tokens();
-    let mut interpreter = Interpret::new(token_stream);
-
+    let interpreter = Interpret::new(token_stream);
     interpreter.execute();
 }

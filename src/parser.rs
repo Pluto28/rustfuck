@@ -1,11 +1,10 @@
-// lookup the token stream for matching open and closing brackets. This should make 
+// lookup the token stream for matching open and closing brackets. This should make
 // our life easier at the execution step
 
-use crate::lexer::Token;
+use crate::lexer::*;
 
 pub trait Parse {
     fn update_matches(&mut self);
-
 }
 
 impl Parse for Vec<Token> {
@@ -37,7 +36,21 @@ impl Parse for Vec<Token> {
 
             tokeni = tokeni + 1;
 
-            if tokeni == self.len() { break }
+            if tokeni == self.len() {
+                break;
+            }
         }
+    }
+}
+
+#[cfg(test)]
+mod parser_tests {
+    use crate::lexer::Tokenize;
+
+    use super::*;
+
+    fn create_tokens() -> Vec<Token> {
+        let tokenstr = String::from("++[+-]");
+        tokenstr.to_tokens()
     }
 }

@@ -21,12 +21,11 @@ impl Tokenize for String {
     fn to_tokens(&self) -> Vec<Token> {
         let chars = self.chars();
         let mut tokens: Vec<Token> = Vec::new();
-        let mut tindex = 0;
 
         for ch in chars {
             let token = match ch {
-                '[' => Token::OBRACKETS(tindex),
-                ']' => Token::CBRACKETS(tindex),
+                '[' => Token::OBRACKETS(0),
+                ']' => Token::CBRACKETS(0),
                 '>' => Token::INCMEMPTR,
                 '<' => Token::DECMEMPTR,
                 '+' => Token::INCVAL,
@@ -35,11 +34,15 @@ impl Tokenize for String {
                 '.' => Token::PUTVAL,
                 _ => Token::COMMENT,
             };
+
+            if token != Token::COMMENT {
+                tokens.push(token);
+            }
         }
 
         tokens.update_matches();
         // debug. Maybe later implement it as a trait
-        println!("\n\n\n\n{:?}", tokens);
+        //println!("\n\n\n\n{:?}", tokens);
         tokens
     }
 }
@@ -50,14 +53,15 @@ mod tests {
 
     #[test]
     fn test_obrackets() {
-        let data = String::from("[").to_tokens().pop().unwrap();
-        assert_eq!(data, Token::OBRACKETS(_));
+        let data = String::from("[]").to_tokens().pop().unwrap();
+        assert_eq!(data, Token::CBRACKETS(0));
     }
 
     #[test]
     fn test_cbrackets() {
-        let data = String::from("]").to_tokens().pop().unwrap();
-        assert_eq!(data, Token::CBRACKETS(_));
+        let data = String::from("[]").to_tokens();
+        let token = data.get(0).unwrap();
+        assert_eq!(*token, Token::OBRACKETS(1));
     }
 
     #[test]

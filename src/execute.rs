@@ -4,7 +4,6 @@ use crate::lexer::Token;
 
 #[derive(Debug)]
 pub struct Interpret {
-    stackp: Vec<usize>,
     memory: Vec<u8>,
     tokens: Vec<Token>,
     instrp: usize,
@@ -14,7 +13,6 @@ pub struct Interpret {
 impl Interpret {
     pub fn new(tokens: Vec<Token>) -> Interpret {
         Interpret {
-            stackp: Vec::new(),
             memory: vec![0; 30_001],
             tokens,
             instrp: 0,
