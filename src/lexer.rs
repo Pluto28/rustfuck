@@ -39,7 +39,7 @@ impl Tokenize for String {
 
         tokens.update_matches();
         // debug. Maybe later implement it as a trait
-        //println!("\n\n\n\n{:?}", tokens);
+        println!("\n\n\n\n{:?}", tokens);
         tokens
     }
 }
