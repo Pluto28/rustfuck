@@ -39,8 +39,24 @@ impl Interpret {
                 Token::DECMEMPTR => self.memp = self.memp - 1,
                 Token::INCVAL => self.inc_val_at_memp(),
                 Token::DECVAl => self.dec_val_at_memp(),
-                Token::OBRACKETS(closei) => (),
-                Token::CBRACKETS(openbi) => (),
+                Token::OBRACKETS(closemb) => {
+                    let memv = *self.memory.
+                        get(self.memp).
+                        unwrap();
+
+                    if memv == 0 {
+                        self.instrp = closemb;
+                    }
+                }
+                Token::CBRACKETS(openmb) => {
+                    let memv = *self.memory.
+                        get(self.memp).
+                        unwrap();
+
+                    if memv != 0 {
+                        self.instrp = openmb;
+                    }
+                },
                 Token::GETVAl => self.get_char(),
                 Token::PUTVAL => self.print_mem(),
                 _ => (),

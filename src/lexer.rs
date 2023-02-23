@@ -25,8 +25,8 @@ impl Tokenize for String {
 
         for ch in chars {
             let token = match ch {
-                '[' => Token::OBRACKETS(0),
-                ']' => Token::CBRACKETS(0),
+                '[' => Token::OBRACKETS(tindex),
+                ']' => Token::CBRACKETS(tindex),
                 '>' => Token::INCMEMPTR,
                 '<' => Token::DECMEMPTR,
                 '+' => Token::INCVAL,
@@ -36,50 +36,53 @@ impl Tokenize for String {
                 _ => Token::COMMENT,
             };
 
-            //if token == Token::OBRACKETS {
-            //    print!(" ({}: {}  {:?}) ", ch, tindex, token);
-            //}
-
             if token != Token::COMMENT {
-                //print!(" ({}: {}  {:?}) ", ch, index, token);
+                print!(" ({}: {}  {:?}) ", ch, tindex, token);
                 tindex = tindex + 1;
                 tokens.push(token);
             }
         }
 
-        tokens.parse();
+        tokens.update_matches();
+        println!("\n\n\n\n{:?}", tokens);
         tokens
     }
 }
 
 impl Parse for Vec<Token> {
-    fn parse(&mut self) {}
+    ///     Lookup matching OBRACKETS and CBRACKETS tokens and update the value
+    /// held by such variants
+    fn update_matches(&mut self) {
+        let mut recurse_val = 0;
+        let mut ob_stack: Vec<usize> = Vec::new();
+        let mut tokeni = 0;
 
-    ///   Lookup recursively, finding the starting and ending index
-    /// of every OBRACKETS or CBRACKETS token, replacing the unfiled
-    /// portion of the enum variant with the value on the token stream
-    /// it sits
-    fn lookup(&mut self, openi: usize) -> usize {
-        let mut tokeni = openi;
-        let mut matchi = openi;
+        loop {
+            let token = self.get_mut(tokeni).unwrap();
 
-        for token in self[openi..].iter_mut() {
             match *token {
-                Token::OBRACKETS(val) => {
-                    self.lookup(tokeni);
-
+                Token::OBRACKETS(_) => {
+                    recurse_val = recurse_val + 1;
+                    ob_stack.push(tokeni);
                 }
-                Token::CBRACKETS(val) => {
-                    matchi = tokeni;
 
+                Token::CBRACKETS(_) => {
+                    recurse_val = recurse_val - 1;
+                    let ob_i = ob_stack.pop().unwrap();
+
+                    *token = Token::CBRACKETS(ob_i);
+
+                    let obracket = self.get_mut(ob_i).unwrap();
+                    *obracket = Token::OBRACKETS(tokeni);
                 }
+
                 _ => (),
             }
 
             tokeni = tokeni + 1;
-        }
 
-        matchi
+            if tokeni == self.len() { break }
+        }
     }
 }
 
