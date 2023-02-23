@@ -35,54 +35,12 @@ impl Tokenize for String {
                 '.' => Token::PUTVAL,
                 _ => Token::COMMENT,
             };
-
-            if token != Token::COMMENT {
-                print!(" ({}: {}  {:?}) ", ch, tindex, token);
-                tindex = tindex + 1;
-                tokens.push(token);
-            }
         }
 
         tokens.update_matches();
-        println!("\n\n\n\n{:?}", tokens);
+        // debug. Maybe later implement it as a trait
+        //println!("\n\n\n\n{:?}", tokens);
         tokens
-    }
-}
-
-impl Parse for Vec<Token> {
-    ///     Lookup matching OBRACKETS and CBRACKETS tokens and update the value
-    /// held by such variants
-    fn update_matches(&mut self) {
-        let mut recurse_val = 0;
-        let mut ob_stack: Vec<usize> = Vec::new();
-        let mut tokeni = 0;
-
-        loop {
-            let token = self.get_mut(tokeni).unwrap();
-
-            match *token {
-                Token::OBRACKETS(_) => {
-                    recurse_val = recurse_val + 1;
-                    ob_stack.push(tokeni);
-                }
-
-                Token::CBRACKETS(_) => {
-                    recurse_val = recurse_val - 1;
-                    let ob_i = ob_stack.pop().unwrap();
-
-                    *token = Token::CBRACKETS(ob_i);
-
-                    let obracket = self.get_mut(ob_i).unwrap();
-                    *obracket = Token::OBRACKETS(tokeni);
-                }
-
-                _ => (),
-            }
-
-            tokeni = tokeni + 1;
-
-            if tokeni == self.len() { break }
-        }
     }
 }
 

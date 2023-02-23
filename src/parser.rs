@@ -8,7 +8,6 @@ pub trait Parse {
 
 }
 
-
 impl Parse for Vec<Token> {
     ///     Lookup matching OBRACKETS and CBRACKETS tokens and update the value
     /// held by such variants
