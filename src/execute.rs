@@ -52,7 +52,7 @@ impl Interpret {
                     if memv != 0 {
                         self.instrp = openmb;
                     }
-                }
+                },
                 Token::GETVAl => self.get_char(),
                 Token::PUTVAL => self.print_mem(),
                 _ => (),
@@ -98,7 +98,10 @@ impl Interpret {
             self.charb = charb;
         }
 
-        let addrp = self.memory.get_mut(self.memp).unwrap();
-        *addrp = self.charb.pop().unwrap() as u8;
+        if self.charb.len() > 0 {
+            let addrp = self.memory.get_mut(self.memp).unwrap();
+            *addrp = self.charb.pop().unwrap() as u8;
+        }
     }
 }
+
