@@ -44,7 +44,7 @@ impl Parse for Vec<Token> {
 }
 
 
-// @TODO: implement tests
+// TODO: tests
 #[cfg(test)]
 mod parser_tests {
     use crate::lexer::Tokenize;

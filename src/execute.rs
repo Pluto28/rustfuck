@@ -4,7 +4,7 @@ use crate::lexer::Token;
 
 #[derive(Debug)]
 pub struct Interpret {
-    memory: Vec<u8>,
+    memory: Vec<u64>,
     tokens: Vec<Token>,
     instrp: usize,
     memp: usize,
@@ -65,14 +65,12 @@ impl Interpret {
         }
     }
 
-    // TODO: handle error
     fn inc_val_at_memp(&mut self) {
         let val = self.memory.get_mut(self.memp).unwrap();
 
         *val = val.wrapping_add(1);
     }
 
-    // TODO: handle error
     fn dec_val_at_memp(&mut self) {
         let val = self.memory.get_mut(self.memp).unwrap();
 
@@ -100,7 +98,7 @@ impl Interpret {
 
         if self.charb.len() > 0 {
             let addrp = self.memory.get_mut(self.memp).unwrap();
-            *addrp = self.charb.pop().unwrap() as u8;
+            *addrp = self.charb.pop().unwrap() as u64;
         }
     }
 }
