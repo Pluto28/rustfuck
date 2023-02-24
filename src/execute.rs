@@ -1,4 +1,4 @@
-use std::io::{stdin, stdout, BufRead, Read, Write};
+use std::io::{stdin, stdout, BufRead, Write};
 
 use crate::lexer::Token;
 
@@ -90,7 +90,7 @@ impl Interpret {
     fn get_char(&mut self) {
         if self.charb.len() == 0 {
             let mut buffer = String::new();
-            let _result = stdin().lock().read_line(&mut buffer).unwrap();
+            let _bytes = stdin().lock().read_line(&mut buffer).unwrap();
 
             let charb = buffer.chars().rev().collect();
             self.charb = charb;
